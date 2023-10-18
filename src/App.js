@@ -12,6 +12,16 @@ function App() {
   return (
     <div className="App">
         <h2>User: {user}</h2>
+        <div>
+          Choose between tracker or leaderboard:
+          <button onClick={() => setPage('tracker')}>
+            Tracker
+          </button>
+          <button onClick={() => setPage('leaderboard')}>
+            Leaderboard
+          </button>
+        </div>
+
         {page == 'tracker' && <BetTracker/>}
         {page == 'leaderboard' && <h3>Leaderboard</h3>}
     </div>
