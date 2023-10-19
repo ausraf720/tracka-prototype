@@ -1,4 +1,5 @@
 import './App.css'
+import { useState } from 'react'
 
 
 const tableHeaders = ['Time', 'Sport', 'Odds', 'Stake', 'Outcome']
@@ -21,9 +22,47 @@ console.log(data1)
 
 const data = [data1, data2, data3, data4]
 
+// Define the options for the dropdown
+const sportOtions = ['NFL', 'NBA', 'All',]
+
+// Handle the change of the selected value
+
+
 function BetTracker() {
+    const sportOptions = ['All', 'NFL', 'NBA']
+    const outcomeOptions = ['All', 'WIN', 'LOSE']
+    const [sport, setSport] = useState(sportOptions[0])
+    const [outcome, setOutcome] = useState(outcomeOptions[0])
+
     return (
         <div>
+            
+            <div class="optionsArea">
+                <span class="optionType">
+                    <h2>Filter by sport</h2>
+                    <select value={sport} onChange={(event) => setSport(event.target.value)}>
+                        {sportOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                            {option}
+                        </option>
+                        ))}
+                    </select>
+                    <p>Selected Option: {sport}</p>
+                </span>
+                <span class="optionType">
+                    <h2>Filter by outcome</h2>
+                    <select value={outcome} onChange={(event) => setOutcome(event.target.value)}>
+                        {outcomeOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                            {option}
+                        </option>
+                        ))}
+                    </select>
+                    <p>Selected Option: {outcome}</p>
+                </span>
+                
+            </div>
+            
             <table>
                 <tr>
                     {htmlHeaders}

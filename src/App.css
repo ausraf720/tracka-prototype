@@ -21,3 +21,14 @@ th {
 td {
   text-align: center;
 }
+
+.optionsArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.optionType {
+  margin: 25px;
+}

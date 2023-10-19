@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div className="App">
-        <h2>User: {user}</h2>
+        <h1>User: {user}</h1>
         <div>
           Choose between tracker or leaderboard:
           <button onClick={() => setPage('tracker')}>
@@ -22,6 +22,7 @@ function App() {
           </button>
         </div>
 
+        {page == 'tracker' && <h3>Bets tracker</h3>}
         {page == 'tracker' && <BetTracker/>}
         {page == 'leaderboard' && <h3>Leaderboard</h3>}
     </div>
