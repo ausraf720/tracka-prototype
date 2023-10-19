@@ -18,21 +18,44 @@ const data1 = dataGen(['Monday', 'NFL', '3.5', '100', 'WIN'], tl)
 const data2 = dataGen(['Monday', 'NBA', '5', '200', 'WIN'], tl)
 const data3 = dataGen(['Friday', 'NFL', '2.5', '100', 'LOSE'], tl)
 const data4 = dataGen(['Thursday', 'NBA', '4', '150', 'WIN'], tl)
-console.log(data1)
+
 
 const data = [data1, data2, data3, data4]
+console.log(data)
 
 // Define the options for the dropdown
 const sportOtions = ['NFL', 'NBA', 'All',]
 
-// Handle the change of the selected value
 
+// Function to filter data based on options selected
+function dataFilter(array, type, option) {
+    
+    if (option == 'All') {
+        return array
+    }
+    else {
+        const newData = []
+        for (let i=0; i<array.length; i++) {
+            if (array[i][type] == option) {
+                newData.push(array[i])
+            }
+        } 
+        return newData
+    }
+
+
+}
 
 function BetTracker() {
     const sportOptions = ['All', 'NFL', 'NBA']
     const outcomeOptions = ['All', 'WIN', 'LOSE']
     const [sport, setSport] = useState(sportOptions[0])
     const [outcome, setOutcome] = useState(outcomeOptions[0])
+
+    // data to be displayed depends on filters
+    let displayData = dataFilter(data, 'sport', sport)
+    displayData = dataFilter(displayData, 'outcome', outcome)
+    
 
     return (
         <div>
@@ -67,7 +90,7 @@ function BetTracker() {
                 <tr>
                     {htmlHeaders}
                 </tr>
-                {data.map((val, key) => {
+                {displayData.map((val, key) => {
                     return (
                         <tr key={key}>
                             <td>{val[tl[0]]}</td>
