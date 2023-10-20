@@ -2,8 +2,9 @@ import './App.css'
 import { useState } from 'react'
 
 
-const tableHeaders = ['Time', 'Sport', 'Odds', 'Stake', 'Outcome']
+const tableHeaders = ['Time', 'Sport', 'Odds', 'Stake', 'Outcome', 'Win/Loss Button']
 const tl = tableHeaders.map(word => word.toLowerCase())
+tl[tl.length-1] = 'confirmer'
 
 const htmlHeaders = tableHeaders.map(word => <th>{word}</th>)
 
@@ -14,17 +15,14 @@ function dataGen(dataArray, columns) {
     }
     return obj
 }
-const data1 = dataGen(['Monday', 'NFL', '3.5', '100', 'WIN'], tl)
-const data2 = dataGen(['Monday', 'NBA', '5', '200', 'WIN'], tl)
-const data3 = dataGen(['Friday', 'NFL', '2.5', '100', 'LOSE'], tl)
-const data4 = dataGen(['Thursday', 'NBA', '4', '150', 'WIN'], tl)
+const data0 = dataGen(['Tueday', 'NFL', '1.5', '400', 'PENDING', '--'], tl)
+const data1 = dataGen(['Tueday', 'NFL', '3.5', '100', 'WIN', '--'], tl)
+const data2 = dataGen(['Monday', 'NBA', '3', '50', 'PENDING', '--'], tl)
+const data3 = dataGen(['Monday', 'NBA', '5', '200', 'WIN', '--'], tl)
+const data4 = dataGen(['Friday', 'NFL', '2.5', '100', 'LOSE', '--'], tl)
+const data5 = dataGen(['Thursday', 'NBA', '4', '150', 'WIN', '--'], tl)
 
-
-const data = [data1, data2, data3, data4]
-console.log(data)
-
-// Define the options for the dropdown
-const sportOtions = ['NFL', 'NBA', 'All',]
+const data = [data0, data1, data2, data3, data4, data5]
 
 
 // Function to filter data based on options selected
@@ -42,19 +40,27 @@ function dataFilter(array, type, option) {
         } 
         return newData
     }
-
-
 }
+
 
 function BetTracker() {
     const sportOptions = ['All', 'NFL', 'NBA']
-    const outcomeOptions = ['All', 'WIN', 'LOSE']
+    const outcomeOptions = ['All', 'WIN', 'LOSE', 'PENDING']
+    const pendingOptions = ['PENDING', 'WIN', 'LOSE']
     const [sport, setSport] = useState(sportOptions[0])
     const [outcome, setOutcome] = useState(outcomeOptions[0])
+    const [pending, setPending] = useState(pendingOptions[0])
 
     // data to be displayed depends on filters
     let displayData = dataFilter(data, 'sport', sport)
     displayData = dataFilter(displayData, 'outcome', outcome)
+
+    // create buttons for pending
+    for (let i=0; i<displayData.length; i++) {
+        if (data[i].outcome == 'PENDING') {
+            data[i].confirmer = true
+        }
+    }
     
 
     return (
@@ -98,6 +104,14 @@ function BetTracker() {
                             <td>{val[tl[2]]}</td>
                             <td>{val[tl[3]]}</td>
                             <td>{val[tl[4]]}</td>
+                            <td>{val[tl[5]] && 
+                                <select value={pending} onChange={(event) => setPending(event.target.value)}>
+                                    {pendingOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                    ))}
+                                </select>}</td>
                         </tr>
                     )
                 })}
