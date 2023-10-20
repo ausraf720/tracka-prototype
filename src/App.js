@@ -1,5 +1,6 @@
 import './App.css';
 import BetTracker from './BetTracker.jsx'
+import BetSubmitter from './BetSubmitter.jsx';
 import Leaderboard from './Leaderboard.jsx'
 import { useState } from 'react';
 
@@ -14,12 +15,15 @@ function App() {
     <div className="App">
       <h1>User: {user}</h1>
       <div>
-        Choose between tracker or leaderboard:
+        Choose between tracker, leaderboard, or submit new bet:
         <button onClick={() => setPage('tracker')}>
           Tracker
         </button>
         <button onClick={() => setPage('leaderboard')}>
           Leaderboard
+        </button>
+        <button onClick={() => setPage('submitter')}>
+          New Bet
         </button>
       </div>
 
@@ -27,6 +31,8 @@ function App() {
       {page == 'tracker' && <BetTracker/>}
       {page == 'leaderboard' && <h3>Leaderboard</h3>}
       {page == 'leaderboard' && <Leaderboard/>}
+      {page == 'submitter' && <h3>Bets Submitter</h3>}
+      {page == 'submitter' && <BetSubmitter/>}
     </div>
   );
 }

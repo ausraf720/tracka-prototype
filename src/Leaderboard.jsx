@@ -28,9 +28,6 @@ for (let i=0; i<displayData.length; i++) {
     displayData[i].position = i+1
 }
 
-
-
-
 function Leaderboard() {
     return (
         <div>
