@@ -49,11 +49,13 @@ function BetTracker() {
     const pendingOptions = ['PENDING', 'WIN', 'LOSE']
     const [sport, setSport] = useState(sportOptions[0])
     const [outcome, setOutcome] = useState(outcomeOptions[0])
-    const [pending, setPending] = useState(pendingOptions[0])
+    
 
     // data to be displayed depends on filters
     let displayData = dataFilter(data, 'sport', sport)
     displayData = dataFilter(displayData, 'outcome', outcome)
+
+    
 
     // create buttons for pending
     for (let i=0; i<displayData.length; i++) {
@@ -61,7 +63,15 @@ function BetTracker() {
             data[i].confirmer = true
         }
     }
+    const [pending, setPending] = useState(Array(displayData.length).fill(pendingOptions[0]))
+    console.log(pending)
     
+    // updates pending array
+    function arrayUpdater(val, array, index) {
+        const newArray = [...array]
+        newArray[index] = val
+        setPending(newArray)
+    }
 
     return (
         <div>
@@ -105,13 +115,14 @@ function BetTracker() {
                             <td>{val[tl[3]]}</td>
                             <td>{val[tl[4]]}</td>
                             <td>{val[tl[5]] && 
-                                <select value={pending} onChange={(event) => setPending(event.target.value)}>
+                                <select value={pending[key]} onChange={(event) => arrayUpdater(event.target.value, pending, key)}>
                                     {pendingOptions.map((option, index) => (
                                     <option key={index} value={option}>
                                         {option}
                                     </option>
                                     ))}
-                                </select>}</td>
+                                </select>}
+                            </td>
                         </tr>
                     )
                 })}
